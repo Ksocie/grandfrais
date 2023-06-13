@@ -1,0 +1,27 @@
+<div class="card">
+  <form class="container-fluid" [formGroup]="Form" (ngSubmit)="onUpdate()">
+    <div class="ui-grid ui-grid-responsive ui-fluid">
+      <div class="p-field">
+        <label for="nom">Nom</label>
+        <input  id="nom" type="text" class="p-inputtext-lg" formControlName="nom" pInputText>
+      </div>
+
+      <div class="p-field">
+        <label for="prenom">Prenom</label>
+        <input id="prenom" type="text" class="p-inputtext-lg" formControlName="prenom" pInputText >
+      </div>
+
+      <div class="p-field">
+        <label for="age">Age</label>
+        <input id="age" type="number" class="p-inputtext-lg" formControlName="age" pInputText>
+       </div>
+       <div class="p-field">
+        <label for="age">Departement</label>
+        <input id="age" type="text" class="p-inputtext-lg" formControlName="departement" pInputText>
+       </div>
+    </div>
+    <div class="container">
+      <button  pButton pRipple label="Update" type="submit" class="p-button-success form"></button>
+    </div>
+  </form>
+</div>

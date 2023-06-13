@@ -1,0 +1,83 @@
+<!-- <p-messages [value]="msgs"></p-messages>
+-->
+
+
+<div class="card">
+  <p-toast></p-toast>
+  <p-toolbar styleClass="mb-4 gap-2">
+      <ng-template pTemplate="left">
+          <button pButton pRipple label="New" icon="pi pi-plus" class="p-button-success mr-2" (click)="showModal()"></button>
+      </ng-template>
+      <ng-template pTemplate="right" >
+        <input type="text" type="text"
+        (input)="myTab.filterGlobal($any($event.target).value,'contains')"
+        autocomplete="on" pInputText placeholder="Recherche" style="width:auto" class="w-full"  [(ngModel)]="selectedPersonne"/>
+      </ng-template>
+  </p-toolbar>
+
+  <p-table #dt [columns]="cols" #myTab [value]="personnes" [paginator]="true" [rows]="10" [rowsPerPageOptions]="[5,10,15,20]" selectionMode="single" [(selection)]="selectedPersonne" dataKey="id" [tableStyle]="{'min-width': '50rem'}"
+  totalRecord="totalRecords" pageLink="3" [globalFilterFields]="['nom','age']" >
+      <ng-template pTemplate="header">
+          <tr>
+              <th>#</th>
+              <th>Nom</th>
+              <th>Prenom</th>
+              <th>Age</th>
+              <th>Departement</th>
+              <th></th>
+
+          </tr>
+      </ng-template>
+      <ng-template pTemplate="body" let-personne>
+          <tr [pSelectableRow]="personne">
+              <td>{{personne.id}}</td>
+              <td>{{personne.nom}}</td>
+              <td>{{personne.prenom}}</td>
+              <td>{{personne.age}}</td>
+              <td>{{personne.departement.designation}}</td>
+              <td>
+                <button pButton icon="pi pi-pencil" class="p-button-rounded p-button-success mr-2" [routerLink]="['/modifier-personne/',personne.id]">
+                </button>
+                &nbsp;
+                <button (click)="deletePersonne(personne.id)" pButton icon="pi pi-trash" class="p-button-rounded p-button-danger mr-2"></button>
+              </td>
+          </tr>
+      </ng-template>
+  </p-table>
+</div>
+<p-dialog [(visible)]="personneDialog" [style]="{ width: '450px' }" header="Ajouter" [modal]="true" styleClass="p-fluid">
+  <ng-template pTemplate="content">
+    <form class="container-fluid" [formGroup]="personneForm">
+
+      <div class="p-field">
+        <label for="designation">Designation</label>
+        <p-dropdown  [options]="departement" formControlName="departement"  optionLabel="designation"></p-dropdown>
+      </div>
+
+      <div class="form-group">
+            <label for="nom">Nom</label>
+            <!--<input  id="nom" type="text" class="p-inputtext-lg" formControlName="nom" pInputText  required autofocus > -->
+            <p-autoComplete formControlName="nom" [suggestions]="filteredCountries" (completeMethod)="filterPersonne($event)" field="nom"></p-autoComplete>
+          </div>
+
+
+        <div class="p-field">
+          <label for="prenom">Prenom</label>
+          <input id="prenom" type="text" class="p-inputtext-lg" formControlName="prenom" pInputText >
+        </div>
+
+        <div class="p-field">
+          <label for="age">Age</label>
+          <input id="age" type="number" class="p-inputtext-lg" formControlName="age" pInputText>
+         </div>
+
+
+
+    </form>
+  </ng-template>
+  <ng-template pTemplate="footer">
+    <div class="ui-dialog-buttonpane ui-helper-clearfix">
+      <button pButton pRipple label="Save"  class="p-button-success" (click)="onSubmit()"></button>
+    </div>
+</ng-template>
+
