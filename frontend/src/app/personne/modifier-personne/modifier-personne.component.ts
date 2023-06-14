@@ -45,14 +45,15 @@ export class ModifierPersonneComponent {
     })
     this.getDepartement();
     this.id = this.route.snapshot.params['id'];
+    console.log(this.id);
     this.personneService.getById(this.id).subscribe((data: any) => {
       let personne = new Personne(this.id,data.nom,data.prenom,data.age,data.departement.designation);
+      console.log(personne);
       this.Form.patchValue(personne);
       (error: any) => {
         console.log(error)
       }
     })
-
 
   }
 
@@ -66,21 +67,12 @@ export class ModifierPersonneComponent {
     }})
   }
 
-  filterPersonne(event: Event) {
-    let filtered: any[] = [];
-    let query = event.isTrusted;
-
-    for (let i = 0; i < this.personnes.length; i++) {
-        let personne = this.personnes[i];
-        filtered.push(personne);
-    }
-
-    this.filteredCountries = filtered;
-  }
-
   onUpdate() {
+    const donneeFormulaire = this.Form.getRawValue();
+    console.log(donneeFormulaire);
     const personne = new Personne(this.id,this.Form.value.nom,this.Form.value.prenom,this.Form.value.age,this.Form.value.departement)
     this.personneService.updatePersonne(this.id, personne).subscribe((data: any)=>{
+      console.log(data);
       this.routes.navigate(['/all'])
     })
   }

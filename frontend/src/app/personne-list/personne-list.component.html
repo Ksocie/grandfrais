@@ -51,25 +51,24 @@
 
       <div class="p-field">
         <label for="designation">Designation</label>
-        <p-dropdown  [options]="departement" formControlName="departement"  optionLabel="designation"></p-dropdown>
+         <!-- <p-autoComplete formControlName="departement" [suggestions]="filteredCountries" (completeMethod)="filterDepartement($event)" field="departement"></p-autoComplete> -->
+        <p-dropdown  [options]="departement" formControlName="departement" placeholder="selection Departement"  optionLabel="designation"></p-dropdown>
       </div>
 
-      <div class="form-group">
-            <label for="nom">Nom</label>
-            <!--<input  id="nom" type="text" class="p-inputtext-lg" formControlName="nom" pInputText  required autofocus > -->
-            <p-autoComplete formControlName="nom" [suggestions]="filteredCountries" (completeMethod)="filterPersonne($event)" field="nom"></p-autoComplete>
-          </div>
+      <div class="p-field">
+        <label for="nom">Nom</label>
+        <input  id="nom" type="text" class="p-inputtext-lg" formControlName="nom" pInputText  required autofocus >
+      </div>
 
+      <div class="p-field">
+        <label for="prenom">Prenom</label>
+        <input id="prenom" type="text" class="p-inputtext-lg" formControlName="prenom" pInputText >
+      </div>
 
-        <div class="p-field">
-          <label for="prenom">Prenom</label>
-          <input id="prenom" type="text" class="p-inputtext-lg" formControlName="prenom" pInputText >
-        </div>
-
-        <div class="p-field">
-          <label for="age">Age</label>
-          <input id="age" type="number" class="p-inputtext-lg" formControlName="age" pInputText>
-         </div>
+      <div class="p-field">
+        <label for="age">Age</label>
+        <input id="age" type="number" class="p-inputtext-lg" formControlName="age" pInputText>
+      </div>
 
 
 

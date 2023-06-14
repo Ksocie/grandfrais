@@ -32,20 +32,16 @@ public class ImplPersonneService implements PersonneService{
         personneRepository.deleteById(id);
     }
 
-    /*public Personne findPersonneById(Long id){
-        return personneRepository.findPersonneById(id).orElseThrow(() -> new UserNotFoundExeception("User  by id " + id + " was not found" ));
-    }*/
-
     @Override
     public List<VOPersonne> findAllPersonne() {
         List<Personne> personnes = personneRepository.findAll();
         return personnes.stream().map(departement -> new VOPersonne(departement, new DepartementVO(departement.getDepartement()))).collect(Collectors.toList());
     }
+
     @Override
     public Personne getPersonneById(Long id) {
         return personneRepository.findById(id).get();
     }
-
 
     @Override
     public VOPersonne updatePersonne(Long id, VOPersonne voPersonne){
@@ -59,10 +55,12 @@ public class ImplPersonneService implements PersonneService{
             personne.setPrenom(voPersonne.getPrenom());
             personne.setAge(voPersonne.getAge());
             personne.setDepartement(departement);
-            return new VOPersonne(personneRepository.save(personne), new DepartementVO(personneRepository.save(personne).getDepartement()));
+            Personne updatedPersonne = personneRepository.save(personne);
+            return new VOPersonne(updatedPersonne, new DepartementVO(updatedPersonne.getDepartement()));
         }
         return  null;
     }
+
     @Override
     public VOPersonne addPersonne(VOPersonne vOPersonne) {
         Departement departement = departementRepository.findById(vOPersonne.getDepartement().getId_DEP()).

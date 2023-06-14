@@ -18,8 +18,8 @@ public class DepartementVO  {
     }
 
 
-
-
-
-
+    public DepartementVO(long id, String design) {
+        this.id_DEP = id;
+        this.designation = design;
+    }
 }

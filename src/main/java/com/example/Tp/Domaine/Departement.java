@@ -30,4 +30,8 @@ public class Departement implements Serializable {
         this.code = code;
         this.designation = designation;
     }
+    public Departement(Long id_DEP, String designation) {
+        this.id_DEP = id_DEP;
+        this.designation = designation;
+    }
 }

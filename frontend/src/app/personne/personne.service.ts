@@ -25,7 +25,7 @@ export class PersonneService {
     return this.http.get(`${this.apiServerUrl}/personne/${id}`);
   }
 
-  public updatePersonne(id:number,personne: any): Observable<any>{
+  public updatePersonne(id:number,personne: Personne): Observable<Personne>{
     return this.http.put<Personne>(`${this.apiServerUrl}/update/${id}`, personne);
   }
 

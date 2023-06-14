@@ -15,13 +15,42 @@
         <label for="age">Age</label>
         <input id="age" type="number" class="p-inputtext-lg" formControlName="age" pInputText>
        </div>
+
        <div class="p-field">
-        <label for="age">Departement</label>
-        <input id="age" type="text" class="p-inputtext-lg" formControlName="departement" pInputText>
-       </div>
+        <label for="designation">Designation</label>
+         <!-- <p-autoComplete formControlName="departement" [suggestions]="filteredCountries" (completeMethod)="filterDepartement($event)" field="departement"></p-autoComplete>  -->
+        <p-dropdown  [options]="departement" formControlName="departement" placeholder="selection Departement" optionLabel="designation"></p-dropdown>
+      </div>
     </div>
     <div class="container">
       <button  pButton pRipple label="Update" type="submit" class="p-button-success form"></button>
     </div>
   </form>
 </div>
+
+<!-- <div class="card border-0 shadow" [formGroup]="Form" (ngSubmit)="onUpdate()">
+  <form  class="form">
+    <div class="p-field">
+      <label for="nom">Nom</label>
+      <input  id="nom" type="text" class="p-inputtext-lg" formControlName="nom" pInputText>
+    </div>
+
+    <div class="p-field">
+      <label for="prenom">Prenom</label>
+      <input id="prenom" type="text" class="p-inputtext-lg" formControlName="prenom" pInputText >
+    </div>
+
+    <div class="p-field">
+      <label for="age">Age</label>
+      <input id="age" type="number" class="p-inputtext-lg" formControlName="age" pInputText>
+     </div>
+
+    <div class="p-field">
+      <label for="designation">Designation</label>
+      <p-dropdown  [options]="departement" formControlName="departement" placeholder="selection Departement" optionLabel="designation"></p-dropdown>
+    </div>
+    <div class="container">
+      <button  pButton pRipple label="Update" type="submit" class="p-button-success form"></button>
+    </div>
+  </form>
+</div> -->

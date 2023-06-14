@@ -72,10 +72,10 @@ export class PersonneListComponent implements OnInit {
 
 
     this.personneForm = this.fBuilder.group({
-      nom : [<object|null>(null),Validators.required],
+      departement:['',Validators.required],
+      nom : [,Validators.required],
       prenom : ['',Validators.required],
       age : [0,Validators.required],
-      departement:['',Validators.required]
 
     })
 
@@ -109,17 +109,17 @@ export class PersonneListComponent implements OnInit {
   }
 
 
-  filterPersonne(event: Event) {
-    let filtered: any[] = [];
-    let query = event.isTrusted;
+  // filterDepartement(event: Event) {
+  //   let filtered: any[] = [];
+  //   let query = event.isTrusted;
 
-    for (let i = 0; i < this.personnes.length; i++) {
-        let personne = this.personnes[i];
-        filtered.push(personne);
-    }
+  //   for (let i = 0; i < this.departement.length; i++) {
+  //       let departement = this.departement[i];
+  //       filtered.push(departement);
+  //   }
 
-    this.filteredCountries = filtered;
-  }
+  //   this.filteredCountries = filtered;
+  // }
 
   //
   showModal() {
@@ -129,17 +129,28 @@ export class PersonneListComponent implements OnInit {
   remove(){}
   //
   onSubmit() {
-    this.personneService.createPersonne(this.personneForm.getRawValue()).subscribe(
+    // let p =this.personneForm.value
+    // p.id = this.personne.id
+    // p.nom=this.personne.nom
+    // p.prenom=this.personne.prenom
+    // p.id
+    // const data = {p.id,p.nom,}
+    console.log(this.personneForm.value)
+
+    this.personneService.createPersonne(this.personneForm.value).subscribe(
       (data: Personne) => {
         window.location.reload();
-        this.getAllPersonne();
+        //this.getAllPersonne();
+        console.log(data)
+      },
+      (Error:any) =>{
+        console.log(Error)
       }
     );
   }
 
   deletePersonne(id: any) {
     this.personneService.deletePersonne(id).subscribe(data =>{
-      this.router.navigate(['/all'])
       this.getAllPersonne ();
     })
   }
