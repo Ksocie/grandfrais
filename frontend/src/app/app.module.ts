@@ -19,13 +19,15 @@ import { ReactiveFormsModule } from '@angular/forms';
 import { ModifierPersonneComponent } from './personne/modifier-personne/modifier-personne.component';
 import { AutoCompleteModule } from 'primeng/autocomplete';
 import { PersonneListComponent } from './personne-list/personne-list.component';
+import { DepartementService } from './Service/departementservice.service';
+
 
 
 @NgModule({
   declarations: [
     AppComponent,
     PersonneListComponent,
-    ModifierPersonneComponent
+    ModifierPersonneComponent,
   ],
   imports: [
     BrowserModule,

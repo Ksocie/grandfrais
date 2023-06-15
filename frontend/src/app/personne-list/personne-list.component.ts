@@ -1,16 +1,22 @@
 import { Personne } from './../personne/personne';
-import { Component, OnChanges, OnInit } from '@angular/core';
+import { Component, NgModule, OnChanges, OnInit } from '@angular/core';
 import { PersonneService } from '../personne/personne.service'
 import { FormBuilder, FormGroup, Validators} from '@angular/forms' ;
 import { DepartementService } from '../Service/departementservice.service';
 import { FilterMatchMode, PrimeNGConfig } from 'primeng/api';
 import { Departement } from '../personne/departement';
+import { ToolbarModule } from "primeng/toolbar";
+
 
 @Component({
   selector: 'app-personne-list',
   templateUrl: './personne-list.component.html',
-  styleUrls: ['./personne-list.component.css']
+  styleUrls: ['./personne-list.component.css'],
+  
 })
+
+
+
 export class PersonneListComponent implements OnInit {
 
   personnes: Personne[] = [];

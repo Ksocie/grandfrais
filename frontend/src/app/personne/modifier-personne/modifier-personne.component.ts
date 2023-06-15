@@ -82,5 +82,5 @@ export class ModifierPersonneComponent {
       this.router.navigate(['/listepersonne'])
       this.lister();
     })
-    }*/
+  }*/
 }

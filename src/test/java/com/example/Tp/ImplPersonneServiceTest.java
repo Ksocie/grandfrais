@@ -26,7 +26,7 @@ import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.when;
-@RunWith(MockitoJUnitRunner.Silent.class)
+//@RunWith(MockitoJUnitRunner.Silent.class)
 public class ImplPersonneServiceTest {
 
     @Mock
@@ -64,7 +64,7 @@ public class ImplPersonneServiceTest {
         // Verify the result
         assertEquals(personnes.size(), resultat.size());
 
-        // Verify the mapping of Personne objects to VOPersonne objects
+        // Vérifier la correspondance entre les objets Personne et les objets VOPersonne
         for (int i = 0; i < personnes.size(); i++) {
             Personne personne = personnes.get(i);
             VOPersonne voPersonne = resultat.get(i);
@@ -82,7 +82,7 @@ public class ImplPersonneServiceTest {
 
     @Test
     void testDeletePersonneById() {
-        // Mock the repository behavior
+        // Simuler le comportement du repository
         Long id = 1L;
         doNothing().when(personneRepository).deleteById(id);
 

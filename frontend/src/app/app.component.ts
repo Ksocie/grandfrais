@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MenuItem } from 'primeng/api';
+import { ToolbarModule } from "primeng/toolbar";
 
 @Component({
   selector: 'app-root',
