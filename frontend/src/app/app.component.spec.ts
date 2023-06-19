@@ -3,7 +3,6 @@ import { RouterTestingModule } from '@angular/router/testing';
 import { AppComponent } from './app.component';
 import { MenuItem } from 'primeng/api';
 import { MenubarModule } from 'primeng/menubar';
-import { ToolbarModule } from "primeng/toolbar";
 describe('AppComponent', () => {
   let component: AppComponent;
   let fixture: ComponentFixture<AppComponent>;
@@ -17,7 +16,7 @@ describe('AppComponent', () => {
       declarations: [
         AppComponent
       ],
-    }).compileComponents();
+    });
   });
 
   beforeEach(() => {
@@ -28,7 +27,7 @@ describe('AppComponent', () => {
 
   // Le test "should create the app"  vérifie que l' instance AppComponent est créée avec succès.
   //Il garantit que le composant est créé sans aucune erreur.
-  it('should create the app', () => {
+  it('Doit créer l application', () => {
     expect(component).toBeTruthy();
   });
 
@@ -36,7 +35,7 @@ describe('AppComponent', () => {
   //dans AppComponent est initialisée correctement.
   //Nous définissons le tableau d' MenuItemobjets attendu et le comparons
   //à la valeur réelle de component.items.
-  it('should initialize the items array', () => {
+  it('Doit initialiser le tableau des éléments', () => {
     const expectedItems: MenuItem[] = [
       {
         label: 'Accueil',

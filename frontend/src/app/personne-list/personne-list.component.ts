@@ -12,7 +12,7 @@ import { ToolbarModule } from "primeng/toolbar";
   selector: 'app-personne-list',
   templateUrl: './personne-list.component.html',
   styleUrls: ['./personne-list.component.css'],
-  
+
 })
 
 
@@ -79,7 +79,7 @@ export class PersonneListComponent implements OnInit {
 
     this.personneForm = this.fBuilder.group({
       departement:['',Validators.required],
-      nom : [,Validators.required],
+      nom : ['',Validators.required],
       prenom : ['',Validators.required],
       age : [0,Validators.required],
 

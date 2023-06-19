@@ -5,6 +5,7 @@ import { ActivatedRoute, Router } from '@angular/router';
 import { Personne } from '../personne';
 import { DepartementService } from 'src/app/Service/departementservice.service';
 
+
 @Component({
   selector: 'app-modifier-personne',
   templateUrl: './modifier-personne.component.html',
@@ -16,6 +17,7 @@ export class ModifierPersonneComponent {
   personnes !: Personne[];
   departement: any;
   filteredCountries!: any[];
+  personneForm: any;
 
 
   constructor(
@@ -28,6 +30,7 @@ export class ModifierPersonneComponent {
 
 
   ngOnInit() {
+
     this.Form = this.formBuilder.group({
       nom: ['',
         [Validators.required]
@@ -43,7 +46,9 @@ export class ModifierPersonneComponent {
       ]
 
     })
+
     this.getDepartement();
+
     this.id = this.route.snapshot.params['id'];
     console.log(this.id);
     this.personneService.getById(this.id).subscribe((data: any) => {

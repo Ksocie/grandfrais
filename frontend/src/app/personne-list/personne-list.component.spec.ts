@@ -1,150 +1,139 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-
-// import { PersonneListComponent } from './personne-list.component';
-// import { HttpClientModule } from '@angular/common/http';
-// import { ReactiveFormsModule } from '@angular/forms';
-// import { HttpClientTestingModule } from '@angular/common/http/testing';
-// import { PersonneService } from '../personne/personne.service';
-// import { DepartementService } from '../Service/departementservice.service';
-
-// describe('PersonneListComponent', () => {
-//   let component: PersonneListComponent;
-//   let fixture: ComponentFixture<PersonneListComponent>;
-
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [ PersonneListComponent ],
-//       imports: [ReactiveFormsModule,HttpClientTestingModule],
-//       providers: [
-//         PersonneService,
-//         DepartementService
-//       ]
-//     })
-//     .compileComponents();
-
-//     fixture = TestBed.createComponent(PersonneListComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
-
-//   it('should create the component', () => {
-//     // Asserting that the component is created
-//     expect(PersonneListComponent).toBeTruthy();
-//   });
-//   it('');
-// });
-
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ActivatedRoute, Router } from '@angular/router';
-import { of } from 'rxjs';
-import { HttpClientTestingModule } from '@angular/common/http/testing';
-import { DepartementService } from 'src/app/Service/departementservice.service';
-import { ModifierPersonneComponent } from '../personne/modifier-personne/modifier-personne.component';
+import { Personne } from './../personne/personne';
+import { PersonneListComponent } from './personne-list.component';
 import { PersonneService } from '../personne/personne.service';
-import { Personne } from '../personne/personne';
+import { DepartementService } from '../Service/departementservice.service';
+import { Form, FormBuilder, FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
+import { ConfirmationService, MessageService, PrimeNGConfig } from 'primeng/api';
+import { of } from 'rxjs';
+import { Departement } from '../personne/departement';
+import { ToastModule } from 'primeng/toast';
+import { ToolbarModule } from 'primeng/toolbar';
+import { TableModule } from 'primeng/table';
+import { DialogModule } from 'primeng/dialog';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
+describe('PersonneListComponent', () => {
+  let component: PersonneListComponent;
+  let fixture: ComponentFixture<PersonneListComponent>;
+  const mockPersonneService = jasmine.createSpyObj('PersonneService', ['getAllPersonne', 'createPersonne','getById','updatePersonne','deletePersonne']);
+  const mockDepartementService = jasmine.createSpyObj('DepartementService', ['getAllDepartement']);
 
-describe('ModifierPersonneComponent', () => {
-  let component: ModifierPersonneComponent;
-  let fixture: ComponentFixture<ModifierPersonneComponent>;
-  let personneService: PersonneService;
-  let departementService: DepartementService;
-  let route: ActivatedRoute;
-  let router: Router;
   let formBuilder: FormBuilder;
 
   beforeEach(async () => {
-    await TestBed.configureTestingModule({
-      declarations: [ModifierPersonneComponent],
-      imports: [ReactiveFormsModule, FormsModule, HttpClientTestingModule],
-      providers: [
-        PersonneService,
-        DepartementService,
-        { provide: ActivatedRoute, useValue: { snapshot: { params: { id: 1 } } } },
-        { provide: Router, useValue: {} },
-        FormBuilder,
+    TestBed.configureTestingModule({
+      declarations: [PersonneListComponent],
+      imports: [
+        ReactiveFormsModule,
+        FormsModule,
+        HttpClientTestingModule,
+        ToastModule,
+        ToolbarModule,
+        TableModule,
+        DialogModule
       ],
+      providers: [
+        { provide: PersonneService ,  useValue: mockPersonneService},
+        { provide: DepartementService , useValue: mockDepartementService},
+        { provide: FormBuilder },
+        { provide: PrimeNGConfig},
+        { provide: MessageService},
+        { provide: ConfirmationService}
+      ],
+			schemas: [NO_ERRORS_SCHEMA]
     }).compileComponents();
+
   });
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(ModifierPersonneComponent);
+    fixture = TestBed.createComponent(PersonneListComponent);
     component = fixture.componentInstance;
-    personneService = TestBed.inject(PersonneService);
-    departementService = TestBed.inject(DepartementService);
-    route = TestBed.inject(ActivatedRoute);
-    router = TestBed.inject(Router);
-    formBuilder = TestBed.inject(FormBuilder);
+    component.personneForm = new FormGroup({
+      departement: new FormControl(''),
+      nom: new FormControl(''),
+      prenom: new FormControl(''),
+      age: new FormControl(0),
+    });
+
+    // Initialisation de la proprité personneForm
+    // component.personneForm = formBuilder.group({
+    //   departement: '',
+    //   nom: '',
+    //   prenom: '',
+    //   age: 0
+    // });
 
   });
+
 
   it('should create the component', () => {
     expect(component).toBeTruthy();
   });
 
-  it('Doit récupérer la personne par l identifiant et les valeurs du formulaire de patch lors de l initialisation', () => {
-    const mockPersonne: Personne = {
-      id: 1,
-      nom: 'John',
-      prenom: 'Doe',
-      age: 30,
-      departement: 'IT',
-    };
+  // it('Doit récupérer toutes les personnes lors de l initialisation', () => {
+  //   const personnes: Personne [] = [
+  //     new Personne(1,'kinhon','jean',19,'IT'),
+  //     new Personne(2,'kouakou','wilfrieed',25,'HR'),
+  //     new Personne(3,'diomande','jean',19,'Finance')
+  //   ];
 
-    spyOn(personneService, 'getById').and.returnValue(of(mockPersonne));
-    spyOn(formBuilder, 'group').and.callThrough();
+  //   spyOn(mockPersonneService, 'getAllPersonne').and.returnValue(of(personnes));
 
-    component.ngOnInit();
+  //   // component.ngOnInit();
 
-    expect(personneService.getById).toHaveBeenCalledWith(1);
-    expect(formBuilder.group).toHaveBeenCalled();
-    //expect(component.Form.value).toEqual(mockPersonne);
-  });
-
-  it('should retrieve departements on initialization', () => {
-    const mockDepartements = ['IT', 'HR', 'Finance'];
-
-    spyOn(departementService, 'getAllDepartement').and.returnValue(of(mockDepartements));
-
-    component.ngOnInit();
-
-    expect(departementService.getAllDepartement).toHaveBeenCalled();
-    expect(component.departement).toEqual(mockDepartements);
-  });
-
-  // it('should update personne and navigate to /all on form submission', () => {
-  //   const mockPersonne: Personne = {
-  //     id: 1,
-  //     nom: 'John',
-  //     prenom: 'Doe',
-  //     age: 30,
-  //     departement: 'IT',
-  //   };
-  //   const mockFormValue = {
-  //     nom: 'Updated John',
-  //     prenom: 'Updated Doe',
-  //     age: 35,
-  //     departement: 'Updated IT',
-  //   };
-
-  //   spyOn(personneService, 'updatePersonne').and.returnValue(of({}));
-  //   spyOn(router, 'navigate');
-
-  //   component.Form = formBuilder.group({
-  //     nom: '',
-  //     prenom: '',
-  //     âge: '',
-  //     département: '',
-  //   });
-
-  //   component.Form.patchValue(mockFormValue);
-  //   component.id = 1;
-  //   component.onUpdate();
-
-  //   expect(personneService.updatePersonne).toHaveBeenCalledWith(1, mockFormValue);
-  //   expect(router.navigate).toHaveBeenCalledWith(['/all']);
+  //   expect(mockPersonneService.getAllPersonne).toHaveBeenCalled();
+  //   expect(component.personnes).toEqual(personnes);
   // });
 
-  // Add more test cases as needed for your component's functionality
+  // it('Doit récupérer toutes les departements lors de l initialisation', () => {
+  //   const departements: Departement[] = [
+  //     new Departement(1, 'IT'),
+  //     new Departement(2, 'HR'),
+  //     new Departement(3, 'Finance')
+  //   ];
+
+  //   spyOn(mockDepartementService, 'getAllDepartement').and.returnValue(of(departements));
+
+  //   // component.ngOnInit();
+
+  //   expect(mockDepartementService.getAllDepartement).toHaveBeenCalled();
+  //   expect(component.departement).toEqual(departements);
+  // });
+
+  // it('devrait créer une nouvelle personne lors de l envoi du formulaire', () => {
+  //   const personneFormValue = {
+  //     departement: 'Sample Departement',
+  //     nom: 'Sample Nom',
+  //     prenom: 'Sample Prenom',
+  //     age: 25
+  //   };
+
+  //   // spyOn(mockPersonneService, 'createPersonne').and.returnValue(of({}));
+
+  //   // component.personneForm.setValue(personneFormValue);
+
+  //   component.onSubmit();
+
+  //   expect(mockPersonneService.createPersonne).toHaveBeenCalledWith(personneFormValue);
+
+  // });
+
+  it('Devrait supprimer une personne', () => {
+    const Id = 1;
+    mockPersonneService.deletePersonne.and.returnValue(of(null));
+    // spyOn(mockPersonneService, 'deletePersonne').and.returnValue(of({}));
+    spyOn(component, 'getAllPersonne');
+
+    // WHEN
+    component.deletePersonne(Id);
+
+    // THEN
+    expect(mockPersonneService.deletePersonne).toHaveBeenCalledWith(Id);
+    expect(component.getAllPersonne).toHaveBeenCalled();
+  });
+
+
+
 });
